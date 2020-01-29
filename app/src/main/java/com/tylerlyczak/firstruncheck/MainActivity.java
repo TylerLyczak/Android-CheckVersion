@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,22 +23,27 @@ public class MainActivity extends AppCompatActivity {
         int savedVersion = sharedPreferences.getInt(APP_VERSION_CODE, ERROR);
 
         // Checks if the app is opened for the first time or is upgraded
+        TextView textView = (TextView) findViewById(R.id.mainText);
         // The app is already updated and already opened
         if (currentVersion == savedVersion) {
             Toast.makeText(MainActivity.this, "Already Opened/Same Version", Toast.LENGTH_SHORT).show();
+            textView.setText("Welcome Back!");
             return;
         }
         // This is the first time the user has opened the app
         else if (savedVersion == ERROR) {
             Toast.makeText(MainActivity.this, "First Time Opened", Toast.LENGTH_SHORT).show();
+            textView.setText("Welcome New User!");
         }
         // The user downloaded an upgrade
         else if (currentVersion > savedVersion) {
             Toast.makeText(MainActivity.this, "Upgraded", Toast.LENGTH_SHORT).show();
+            textView.setText("Upgraded Version!");
         }
         // ERROR
         else    {
             Toast.makeText(MainActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
+            textView.setText("ERROR");
         }
 
         sharedPreferences.edit().putInt(APP_VERSION_CODE, currentVersion).apply();
